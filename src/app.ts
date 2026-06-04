@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoute from './routes/auth.routes';
+import farmRoutes from "./routes/farm.routes";
+import { notFound } from './middlewares/not-found';
 
 const app = express();
 
@@ -33,6 +35,12 @@ app.get('/api', (req, res) => {
     });
 });
 
-app.use('/api', authRoute);
+app.use('/api/auth', authRoute);
+app.use("/api/farms", farmRoutes);
 
+
+
+
+
+app.use(notFound)
 export default app;

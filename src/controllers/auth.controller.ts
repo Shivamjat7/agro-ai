@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../config/logger';
-import { loginSchema, signupSchema } from '../validations/auth.validation';
+import { loginSchema, signupSchema } from '../validators/auth.validation';
 import { createUser, signinUser } from '../services/auth.service';
 import { jwttoken } from './../utils/jwt';
 import { cookies } from '../utils/cookies';

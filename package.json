@@ -1,7 +1,7 @@
 {
-    "name": "backend-template",
+    "name": "Agro Ai backend",
     "version": "1.0.0",
-    "description": "full working perfect  backend template",
+    "description": "Agro ai backend",
     "license": "ISC",
     "author": "shivam jat",
     "type": "module",
@@ -20,7 +20,9 @@
         "type-check": "tsc --noEmit",
         "clean": "rimraf dist",
         "format": "prettier . --write",
-        "format:check": "prettier . --check"
+        "format:check": "prettier . --check",
+         "db:drop": "drizzle-kit drop",
+  "check": "npm run lint && npm run type-check"
     },
     "dependencies": {
         "@neondatabase/serverless": "^1.1.0",
