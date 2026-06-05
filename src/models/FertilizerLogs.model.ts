@@ -3,10 +3,13 @@ import {
   uuid,
   varchar,
   text,
-  date,
+  timestamp,
+  jsonb,
+  real
 } from "drizzle-orm/pg-core";
 
 import { crops } from "./Crop.model";
+
 
 export const fertilizerLogs = pgTable(
   "fertilizer_logs",
@@ -21,24 +24,45 @@ export const fertilizerLogs = pgTable(
       })
       .notNull(),
 
-    fertilizerName: varchar(
-      "fertilizer_name",
-      {
-        length: 150,
-      }
-    ).notNull(),
+    imageUrl: varchar("image_url", {
+      length: 500,
+    }),
 
-    quantity: varchar(
-      "quantity",
+    productName: varchar("product_name", {
+      length: 255,
+    }),
+
+    quantity: real("quantity"),
+
+    unit: varchar("unit", {
+      length: 20,
+    }),
+
+    applicationMethod: varchar(
+      "application_method",
       {
-        length: 100,
+        length: 50,
       }
     ),
 
-    appliedOn: date(
-      "applied_on"
-    ).notNull(),
+    details: text("details"),
+
+    aiExtractedData: jsonb(
+      "ai_extracted_data"
+    ),
 
     notes: text("notes"),
+
+    appliedAt: timestamp(
+      "applied_at"
+    )
+      .defaultNow()
+      .notNull(),
+
+    createdAt: timestamp(
+      "created_at"
+    )
+      .defaultNow()
+      .notNull(),
   }
 );

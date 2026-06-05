@@ -3,12 +3,15 @@ import {
   uuid,
   varchar,
   text,
-  date,
+  timestamp,
+  jsonb,
+  real
 } from "drizzle-orm/pg-core";
 
 import { crops } from "./Crop.model";
 
-export const medicineLogs = pgTable(
+
+export const MedicineLogs = pgTable(
   "medicine_logs",
   {
     id: uuid("id")
@@ -21,15 +24,18 @@ export const medicineLogs = pgTable(
       })
       .notNull(),
 
-    medicineName: varchar(
-      "medicine_name",
-      {
-        length: 150,
-      }
-    ).notNull(),
+    imageUrl: varchar("image_url", {
+      length: 500,
+    }),
 
-    dosage: varchar("dosage", {
-      length: 100,
+    productName: varchar("product_name", {
+      length: 255,
+    }),
+
+    quantity: real("quantity"),
+
+    unit: varchar("unit", {
+      length: 20,
     }),
 
     applicationMethod: varchar(
@@ -39,10 +45,24 @@ export const medicineLogs = pgTable(
       }
     ),
 
-    appliedOn: date(
-      "applied_on"
-    ).notNull(),
+    details: text("details"),
+
+    aiExtractedData: jsonb(
+      "ai_extracted_data"
+    ),
 
     notes: text("notes"),
+
+    appliedAt: timestamp(
+      "applied_at"
+    )
+      .defaultNow()
+      .notNull(),
+
+    createdAt: timestamp(
+      "created_at"
+    )
+      .defaultNow()
+      .notNull(),
   }
 );
