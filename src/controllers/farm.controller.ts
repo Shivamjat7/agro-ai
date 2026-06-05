@@ -7,6 +7,7 @@ export const createFarm = async (
   next: NextFunction
 ) => {
   try {
+    console.log("req.user", req.user);
     const farm = await farmService.createFarm(
       req.user!.id,
       req.body

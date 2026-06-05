@@ -15,6 +15,13 @@
       "when": 1780575068436,
       "tag": "0001_stormy_shiva",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780638189239,
+      "tag": "0002_lowly_stingray",
+      "breakpoints": true
     }
   ]
 }

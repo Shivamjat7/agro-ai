@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import authRoute from './routes/auth.routes';
 import farmRoutes from "./routes/farm.routes";
 import { notFound } from './middlewares/not-found';
+import cropRoutes from './routes/crop.routes';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/auth', authRoute);
 app.use("/api/farms", farmRoutes);
+app.use('/api/crops',cropRoutes)
 
 
 

@@ -3,9 +3,11 @@ import { farms } from "../models/Farm.model";
 import { and, eq, isNull } from "drizzle-orm";
 
 export const createFarm = async (
-  userId: string,
+  userId: number,
   payload: any
 ) => {
+    console.log("userId:", userId);
+console.log(typeof userId);
   const existingFarm = await db.query.farms.findFirst({
     where: and(
       eq(farms.userId, userId),

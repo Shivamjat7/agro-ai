@@ -5,6 +5,7 @@ import {
   real,
   timestamp,
   index,
+  integer
 } from "drizzle-orm/pg-core";
 
 import { users } from "./User.model";
@@ -14,11 +15,11 @@ export const farms = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
 
-    userId: uuid("user_id")
-      .references(() => users.id, {
-        onDelete: "cascade",
-      })
-      .notNull(),
+   userId: integer("user_id")
+  .references(() => users.id, {
+    onDelete: "cascade",
+  })
+  .notNull(),
 
     farmName: varchar("farm_name", {
       length: 100,
