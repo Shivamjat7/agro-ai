@@ -9,6 +9,7 @@ import farmRoutes from "./routes/farm.routes";
 import { notFound } from './middlewares/not-found';
 import cropRoutes from './routes/crop.routes';
 import weeklyLogsRoutes from './routes/weekly-log.routes';
+import imageRoutes from './routes/image.routes';
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use('/api/auth', authRoute);
 app.use("/api/farms", farmRoutes);
 app.use('/api/crops',cropRoutes);
 app.use('/api/weekly-logs',weeklyLogsRoutes);
+app.use("/api/images", imageRoutes);
 
 
 
