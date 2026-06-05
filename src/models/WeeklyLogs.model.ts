@@ -1,41 +1,54 @@
 import {
-  pgTable,
-  uuid,
-  integer,
-  text,
-  timestamp,
-  varchar,
+    pgTable,
+    uuid,
+    integer,
+    real,
+    boolean,
+    varchar,
+    text,
+    timestamp,
 } from "drizzle-orm/pg-core";
 
 import { crops } from "./Crop.model";
 
-export const weeklyLogs = pgTable(
-  "weekly_logs",
-  {
+export const weeklyLogs = pgTable("weekly_logs", {
     id: uuid("id")
-      .defaultRandom()
-      .primaryKey(),
+        .defaultRandom()
+        .primaryKey(),
 
     cropId: uuid("crop_id")
-      .references(() => crops.id, {
-        onDelete: "cascade",
-      })
-      .notNull(),
+        .references(() => crops.id, {
+            onDelete: "cascade",
+        })
+        .notNull(),
 
     weekNumber: integer("week_number")
-      .notNull(),
+        .notNull(),
 
-    growthStage: varchar(
-      "growth_stage",
-      {
-        length: 100,
-      }
-    ),
+    plantHeight: real("plant_height"),
 
-    notes: text("notes"),
+    leafColor: varchar("leaf_color", {
+        length: 50,
+    }),
+
+    healthScore: integer("health_score"),
+
+    irrigationDone: boolean("irrigation_done")
+        .default(false),
+
+    fertilizerApplied: boolean("fertilizer_applied")
+        .default(false),
+
+    pesticideApplied: boolean("pesticide_applied")
+        .default(false),
+
+    farmerNotes: text("farmer_notes"),
 
     createdAt: timestamp("created_at")
-      .defaultNow()
-      .notNull(),
-  }
-);
+        .defaultNow()
+        .notNull(),
+
+    updatedAt: timestamp("updated_at")
+        .defaultNow()
+        .notNull(),
+});
