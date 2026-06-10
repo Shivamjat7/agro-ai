@@ -10,6 +10,7 @@ import { notFound } from './middlewares/not-found';
 import cropRoutes from './routes/crop.routes';
 import weeklyLogsRoutes from './routes/weekly-log.routes';
 import imageRoutes from './routes/image.routes';
+import weatherRoutes from './routes/weather.routes';
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use("/api/farms", farmRoutes);
 app.use('/api/crops',cropRoutes);
 app.use('/api/weekly-logs',weeklyLogsRoutes);
 app.use("/api/images", imageRoutes);
+app.use("/api/weather",weatherRoutes);
 
 
 

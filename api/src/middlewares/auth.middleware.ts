@@ -26,7 +26,7 @@ export const authenticate = (
     const payload = jwttoken.verify(token) as {
       id: string;
     };
-    console.log('jwt payload:',payload)
+    
 
     req.user = {
       id: payload.id,
