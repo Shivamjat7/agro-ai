@@ -1,8 +1,8 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq } from 'drizzle-orm';
 
-import { db } from "../config/database";
-import { farms } from "../models/Farm.model";
-import { crops } from "../models/Crop.model";
+import { db } from '../config/database';
+import { farms } from '../models/Farm.model';
+import { crops } from '../models/Crop.model';
 
 export const createCrop = async (
     userId: number,
@@ -16,16 +16,11 @@ export const createCrop = async (
     }
 ) => {
     const farm = await db.query.farms.findFirst({
-        where: and(
-            eq(farms.id, payload.farmId),
-            eq(farms.userId, userId)
-        ),
+        where: and(eq(farms.id, payload.farmId), eq(farms.userId, userId)),
     });
 
     if (!farm) {
-        throw new Error(
-            "Farm not found or unauthorized"
-        );
+        throw new Error('Farm not found or unauthorized');
     }
 
     const [crop] = await db
@@ -36,30 +31,20 @@ export const createCrop = async (
             variety: payload.variety,
             soilType: payload.soilType,
             sowingDate: payload.sowingDate,
-            expectedHarvestDate:
-                payload.expectedHarvestDate,
+            expectedHarvestDate: payload.expectedHarvestDate,
         })
         .returning();
 
     return crop;
 };
 
-
-export const getFarmCrops = async (
-    userId: number,
-    farmId: string
-) => {
+export const getFarmCrops = async (userId: number, farmId: string) => {
     const farm = await db.query.farms.findFirst({
-        where: and(
-            eq(farms.id, farmId),
-            eq(farms.userId, userId)
-        ),
+        where: and(eq(farms.id, farmId), eq(farms.userId, userId)),
     });
 
     if (!farm) {
-        throw new Error(
-            "Farm not found or unauthorized"
-        );
+        throw new Error('Farm not found or unauthorized');
     }
 
     return db.query.crops.findMany({
@@ -67,10 +52,7 @@ export const getFarmCrops = async (
     });
 };
 
-export const getCropById = async (
-    userId: number,
-    cropId: string
-) => {
+export const getCropById = async (userId: number, cropId: string) => {
     const crop = await db.query.crops.findFirst({
         with: {
             farm: true,
@@ -79,11 +61,11 @@ export const getCropById = async (
     });
 
     if (!crop) {
-        throw new Error("Crop not found");
+        throw new Error('Crop not found');
     }
 
     if (crop.farm.userId !== userId) {
-        throw new Error("Unauthorized");
+        throw new Error('Unauthorized');
     }
 
     return crop;

@@ -52,7 +52,6 @@ export const signinUser = async ({ email, password }: LoginInput) => {
     if (!user) {
         throw new Error('Invalid email or password');
     }
-    
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 

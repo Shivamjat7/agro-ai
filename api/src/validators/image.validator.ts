@@ -1,18 +1,9 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const uploadImageSchema =
-    z.object({
-        cropId: z.string().uuid(),
+export const uploadImageSchema = z.object({
+    cropId: z.string().uuid(),
 
-        weeklyLogId: z
-            .string()
-            .uuid()
-            .optional(),
+    weeklyLogId: z.string().uuid().optional(),
 
-        imageType: z.enum([
-            "plant",
-            "leaf",
-            "soil",
-            "field",
-        ]),
-    });
+    imageType: z.enum(['plant', 'leaf', 'soil', 'field']),
+});

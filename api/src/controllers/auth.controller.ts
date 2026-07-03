@@ -64,11 +64,7 @@ export const Signin = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-export const Logout = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const Logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
         cookies.clear(res, 'token');
 

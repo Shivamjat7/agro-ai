@@ -1,68 +1,41 @@
-import {
-  pgTable,
-  uuid,
-  varchar,
-  text,
-  timestamp,
-  jsonb,
-  real
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, text, timestamp, jsonb, real } from 'drizzle-orm/pg-core';
 
-import { crops } from "./Crop.model";
+import { crops } from './Crop.model';
 
+export const fertilizerLogs = pgTable('fertilizer_logs', {
+    id: uuid('id').defaultRandom().primaryKey(),
 
-export const fertilizerLogs = pgTable(
-  "fertilizer_logs",
-  {
-    id: uuid("id")
-      .defaultRandom()
-      .primaryKey(),
+    cropId: uuid('crop_id')
+        .references(() => crops.id, {
+            onDelete: 'cascade',
+        })
+        .notNull(),
 
-    cropId: uuid("crop_id")
-      .references(() => crops.id, {
-        onDelete: "cascade",
-      })
-      .notNull(),
-
-    imageUrl: varchar("image_url", {
-      length: 500,
+    imageUrl: varchar('image_url', {
+        length: 500,
     }),
 
-    productName: varchar("product_name", {
-      length: 255,
+    productName: varchar('product_name', {
+        length: 255,
     }),
 
-    quantity: real("quantity"),
+    quantity: real('quantity'),
 
-    unit: varchar("unit", {
-      length: 20,
+    unit: varchar('unit', {
+        length: 20,
     }),
 
-    applicationMethod: varchar(
-      "application_method",
-      {
+    applicationMethod: varchar('application_method', {
         length: 50,
-      }
-    ),
+    }),
 
-    details: text("details"),
+    details: text('details'),
 
-    aiExtractedData: jsonb(
-      "ai_extracted_data"
-    ),
+    aiExtractedData: jsonb('ai_extracted_data'),
 
-    notes: text("notes"),
+    notes: text('notes'),
 
-    appliedAt: timestamp(
-      "applied_at"
-    )
-      .defaultNow()
-      .notNull(),
+    appliedAt: timestamp('applied_at').defaultNow().notNull(),
 
-    createdAt: timestamp(
-      "created_at"
-    )
-      .defaultNow()
-      .notNull(),
-  }
-);
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+});

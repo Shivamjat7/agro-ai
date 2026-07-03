@@ -7,3 +7,5 @@ export * from './MedicineLogs.model';
 export * from './FertilizerLogs.model';
 export * from './WeatherSnapshot.model';
 export * from './AdviceHistory';
+export * from './AIanalysis.model';
+export * from './CropType.model';

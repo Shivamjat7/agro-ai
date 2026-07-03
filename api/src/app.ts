@@ -5,12 +5,14 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoute from './routes/auth.routes';
-import farmRoutes from "./routes/farm.routes";
+import farmRoutes from './routes/farm.routes';
 import { notFound } from './middlewares/not-found';
 import cropRoutes from './routes/crop.routes';
 import weeklyLogsRoutes from './routes/weekly-log.routes';
 import imageRoutes from './routes/image.routes';
 import weatherRoutes from './routes/weather.routes';
+import aiRoutes from './routes/ai.routes';
+import logRoutes from './routes/log.routes';
 
 const app = express();
 
@@ -40,14 +42,13 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/auth', authRoute);
-app.use("/api/farms", farmRoutes);
-app.use('/api/crops',cropRoutes);
-app.use('/api/weekly-logs',weeklyLogsRoutes);
-app.use("/api/images", imageRoutes);
-app.use("/api/weather",weatherRoutes);
+app.use('/api/farms', farmRoutes);
+app.use('/api/crops', cropRoutes);
+app.use('/api/crops', logRoutes); // Mounting fertilizer/medicine log sub-routes
+app.use('/api/weekly-logs', weeklyLogsRoutes);
+app.use('/api/images', imageRoutes);
+app.use('/api/weather', weatherRoutes);
+app.use('/api/ai', aiRoutes);
 
-
-
-
-app.use(notFound)
+app.use(notFound);
 export default app;

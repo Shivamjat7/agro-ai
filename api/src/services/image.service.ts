@@ -1,33 +1,29 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and } from 'drizzle-orm';
 
-import cloudinary from "../config/cloudinary";
-import { db } from "../config/database";
+import cloudinary from '../config/cloudinary';
+import { db } from '../config/database';
 
-import { farms } from "../models/Farm.model";
-import { crops } from "../models/Crop.model";
-import { cropImages } from "../models/CropImage.model";
-import streamifier from "streamifier";
+import { farms } from '../models/Farm.model';
+import { crops } from '../models/Crop.model';
+import { cropImages } from '../models/CropImage.model';
+import streamifier from 'streamifier';
 
-export const uploadToCloudinary = (
-    buffer: Buffer
-): Promise<any> => {
+export const uploadToCloudinary = (buffer: Buffer): Promise<any> => {
     return new Promise((resolve, reject) => {
-        const stream =
-            cloudinary.uploader.upload_stream(
-                {
-                    folder: "agro-ai",
-                },
-                (error, result) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(result);
-                    }
+        const stream = cloudinary.uploader.upload_stream(
+            {
+                folder: 'agro-ai',
+            },
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
                 }
-            );
+            }
+        );
 
-        streamifier.createReadStream(buffer)
-            .pipe(stream);
+        streamifier.createReadStream(buffer).pipe(stream);
     });
 };
 
@@ -46,59 +42,41 @@ export const uploadImage = async (
             farmUserId: farms.userId,
         })
         .from(crops)
-        .innerJoin(
-            farms,
-            eq(crops.farmId, farms.id)
-        )
+        .innerJoin(farms, eq(crops.farmId, farms.id))
         .where(eq(crops.id, payload.cropId));
 
     if (!crop.length) {
-        throw new Error("Crop not found");
+        throw new Error('Crop not found');
     }
 
     if (crop[0].farmUserId !== userId) {
-        throw new Error("Unauthorized");
+        throw new Error('Unauthorized');
     }
 
-    const uploaded =
-        await uploadToCloudinary(
-            file.buffer
-        );
+    const uploaded = await uploadToCloudinary(file.buffer);
 
     const [image] = await db
         .insert(cropImages)
         .values({
             publicId: uploaded.public_id,
             cropId: payload.cropId,
-            weeklyLogId:
-                payload.weeklyLogId,
+            weeklyLogId: payload.weeklyLogId,
             imageUrl: uploaded.secure_url,
-            imageType:
-                payload.imageType,
+            imageType: payload.imageType,
         })
         .returning();
 
     return image;
 };
 
-export const getCropImages = async (
-    cropId: string
-) => {
+export const getCropImages = async (cropId: string) => {
     return db.query.cropImages.findMany({
-        where: eq(
-            cropImages.cropId,
-            cropId
-        ),
+        where: eq(cropImages.cropId, cropId),
     });
 };
 
-export const getWeeklyLogImages = async (
-    weeklyLogId: string
-) => {
+export const getWeeklyLogImages = async (weeklyLogId: string) => {
     return db.query.cropImages.findMany({
-        where: eq(
-            cropImages.weeklyLogId,
-            weeklyLogId
-        ),
+        where: eq(cropImages.weeklyLogId, weeklyLogId),
     });
 };

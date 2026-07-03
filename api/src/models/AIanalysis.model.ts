@@ -1,48 +1,25 @@
-import {
-  pgTable,
-  uuid,
-  varchar,
-  real,
-  jsonb,
-  timestamp,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, real, jsonb, timestamp } from 'drizzle-orm/pg-core';
 
-import { crops } from "./Crop.model";
+import { crops } from './Crop.model';
 
-export const aiAnalyses = pgTable(
-  "ai_analyses",
-  {
-    id: uuid("id")
-      .defaultRandom()
-      .primaryKey(),
+export const aiAnalyses = pgTable('ai_analyses', {
+    id: uuid('id').defaultRandom().primaryKey(),
 
-    cropId: uuid("crop_id")
-      .references(() => crops.id, {
-        onDelete: "cascade",
-      })
-      .notNull(),
+    cropId: uuid('crop_id')
+        .references(() => crops.id, {
+            onDelete: 'cascade',
+        })
+        .notNull(),
 
-    analysisType: varchar(
-      "analysis_type",
-      {
+    analysisType: varchar('analysis_type', {
         length: 50,
-      }
-    ).notNull(),
+    }).notNull(),
 
-    confidence: real(
-      "confidence"
-    ),
+    confidence: real('confidence'),
 
-    result: jsonb("result"),
+    result: jsonb('result'),
 
-    rawResponse: jsonb(
-      "raw_response"
-    ),
+    rawResponse: jsonb('raw_response'),
 
-    createdAt: timestamp(
-      "created_at"
-    )
-      .defaultNow()
-      .notNull(),
-  }
-);
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+});

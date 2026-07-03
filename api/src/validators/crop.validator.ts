@@ -1,18 +1,17 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const createCropSchema = z.object({
-  farmId: z.number(),
+    farmId: z.number(),
 
-  cropName: z.string().min(2),
+    cropName: z.string().min(2),
 
-  variety: z.string().optional(),
+    variety: z.string().optional(),
 
-  soilType: z.string().optional(),
+    soilType: z.string().optional(),
 
-  sowingDate: z.string(),
+    sowingDate: z.string(),
 
-  expectedHarvestDate: z.string().optional(),
+    expectedHarvestDate: z.string().optional(),
 });
 
-export const updateCropSchema =
-  createCropSchema.partial();
+export const updateCropSchema = createCropSchema.partial();

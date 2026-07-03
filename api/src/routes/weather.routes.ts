@@ -1,25 +1,13 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { authenticate }
-from "../middlewares/auth.middleware";
+import { authenticate } from '../middlewares/auth.middleware';
 
-import {
-    getFarmWeather,
-    getWeatherHistory,
-} from "../controllers/weather.controller";
+import { getFarmWeather, getWeatherHistory } from '../controllers/weather.controller';
 
 const router = Router();
 
-router.get(
-    "/farm/:farmId",
-    authenticate,
-    getFarmWeather
-);
+router.get('/farm/:farmId', authenticate, getFarmWeather);
 
-router.get(
-    "/history/:farmId",
-    authenticate,
-    getWeatherHistory
-);
+router.get('/history/:farmId', authenticate, getWeatherHistory);
 
 export default router;
